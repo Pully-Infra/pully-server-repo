@@ -16,12 +16,12 @@
 
 To deploy the Pully infrastructure to your AWS Account, you should make use of the pully cli package or deploy directly from the [deployment repository](https://github.com/Pully-Infra/pully-deploy).
 
-### How is Pully deployed
+### How is Pully deployed?
 
 - The entire application is containerized using Docker. If you want to update the `Dockerfile`, you can clone or fork this repo and run `docker build -t <your-tag>`, then push to docker hub. You then need to change the docker image in the `deploy.js` file in the deployment repository to the new image name.
 - Deployment is done using AWS Elastic Container Service. A new ECS Cluster is setup and the dockerized application is added as a task to a fargate service launch type.
 
-### How is Auto Scaling handled
+### How is Auto Scaling handled?
 
 - Auto Scaling policy is set up on the ECS Service to auto scale tasks based on memory and CPU usage. The policy is currently setup to allow a maximum of 4 tasks running at a time.
 - AWS Elastic load balancer is also employed to distribute traffic across the several tasks running on ECS.
