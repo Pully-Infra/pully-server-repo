@@ -5,6 +5,7 @@ const express = require("express");
 const { Server } = require("socket.io");
 const bodyParser = require("body-parser");
 const { createClient } = require("redis");
+const redisAdapter = require("socket.io-redis");
 
 const {
   ERROR_CODES,
@@ -27,6 +28,7 @@ const { relationshipMiddleware } = require("./lib/middleware/relationship");
 
 const PORT = process.env.PORT || 3008;
 const REDIS_URL = process.env.REDIS_URL;
+const REDIS_PORT = process.env.REDIS_PORT;
 const NODE_ENV = process.env.NODE_ENV || "dev";
 
 const NODE_ENV_IS_DEV = NODE_ENV === "dev";
@@ -46,6 +48,15 @@ const io = new Server(server, {
     origin: "*",
   },
 });
+
+if (!NODE_ENV_IS_DEV) {
+  io.adapter(
+    redisAdapter({
+      host: REDIS_URL,
+      port: REDIS_PORT,
+    })
+  );
+}
 
 const pullyApps = io.of(/.*/);
 

@@ -1,4 +1,4 @@
-from node:alpine
+from --platform=linux/amd64 node:alpine
 
 workdir /pully-server
 
