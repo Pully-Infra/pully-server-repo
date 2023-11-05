@@ -1,6 +1,6 @@
 ## Pully Server
 
-### Information
+### Information.
 
 - Server is primarily a websocket server that handles socket io connections.
 - Server has post method for validating relationship.json file.
