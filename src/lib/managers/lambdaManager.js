@@ -18,7 +18,7 @@ class LambdaManager {
       const lambda = lambdas[i];
       const response = await lambdaService.invokeLambda(lambda, message);
 
-      if (response) {
+      if (response && !response.errorMessage) {
         message = response;
       }
     }

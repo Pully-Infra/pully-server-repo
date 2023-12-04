@@ -16,6 +16,9 @@ const ERROR_MESSAGES = {
   LAMBDA_DEPLOY_FAILED: "Lambda function(s) failed to deploy",
   FAILED_UPLOAD_TO_S3: "Relationship.json could not be saved to S3",
   VALIDATION_FAILED: "Validation failed or Invalid parameter(s) passed",
+  UNAUTHENTICATED:
+    "You do not have valid authentication to access this resource",
+  TOKEN_VALIDATION_FAILED: "Token could not be validated",
   RELATIONSHIP_VALIDATION_FAILED:
     "relationships.json file is improperly formatted or could not be uploaded",
 };

@@ -4,8 +4,6 @@ const handleUnSubscription = (data, socket) => {
   if (typeof channel === "string") {
     socket.leave(channel);
   }
-
-  console.log("unsubscribe", channel);
 };
 
 module.exports = handleUnSubscription;

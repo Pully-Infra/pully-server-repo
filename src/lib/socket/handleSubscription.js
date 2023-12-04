@@ -4,8 +4,6 @@ const handleSubscription = (data, socket) => {
   if (typeof channel === "string") {
     socket.join(channel);
   }
-
-  console.log("subscribe", channel);
 };
 
 module.exports = handleSubscription;

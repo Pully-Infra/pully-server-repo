@@ -23,7 +23,7 @@ class RelationshipManager {
     const isJsonValid = isJsonString(data);
 
     if (isJsonValid) {
-      this.data = JSON.parse(retrieved);
+      this.data = JSON.parse(data);
     }
   };
 

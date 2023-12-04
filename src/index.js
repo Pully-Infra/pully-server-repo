@@ -1,6 +1,6 @@
 require("dotenv").config();
 const cors = require("cors");
-const http = require("http");
+const http = require("node:http");
 const express = require("express");
 const { Server } = require("socket.io");
 const bodyParser = require("body-parser");
@@ -60,7 +60,7 @@ if (!NODE_ENV_IS_DEV) {
 
 const pullyApps = io.of(/.*/);
 
-io.use(authorizeConnection);
+pullyApps.use(authorizeConnection);
 
 app.get("/", (_, res) => {
   res.send("Pully Realtime Infrastructure");
@@ -70,22 +70,22 @@ let redisPublisher;
 let redisSubscriber;
 
 if (!NODE_ENV_IS_DEV) {
-  redisPublisher = createClient({ url: REDIS_URL });
-  redisSubscriber = createClient({ url: REDIS_URL });
+  redisPublisher = createClient({ url: `${REDIS_URL}:${REDIS_PORT}` });
+  redisSubscriber = createClient({ url: `${REDIS_URL}:${REDIS_PORT}` });
 
   redisSubscriber.subscribe("update-relationship", (message) => {
     relationshipManager.handleUpdate(message);
   });
 }
 
-pullyApps.on("connection", (socket) => {
-  console.log("Connected");
+pullyApps.on("connection", async (socket) => {
+  const namespaces = io._nsps;
   socket.on(PULLY_EVENTS.SUBSCRIBE, (data) => handleSubscription(data, socket));
   socket.on(PULLY_EVENTS.UNSUBSCRIBE, (data) =>
     handleUnSubscription(data, socket)
   );
   socket.on(PULLY_EVENTS.SEND_MESSAGE, (data) =>
-    handleSentMessage(data, socket, lambdaManager)
+    handleSentMessage(data, socket, namespaces, lambdaManager)
   );
 });
 
